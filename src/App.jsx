@@ -27,10 +27,10 @@ const App = () => {
   return (
     <div className='container mx-auto h-screen flex flex-col justify-around'>
       <ToastContainer theme='colored' autoClose={1000} />
-      <div ref={chatRef} className='h-[70%] p-5 bg-base-200 rounded-lg shadow-md overflow-y-scroll'>
+      <div ref={chatRef} className='h-[75%] p-5 bg-base-200 rounded-lg shadow-md overflow-y-scroll'>
         <Chat messages={messages} />
       </div>
-      <div className='h-[25%] p-5 bg-base-200 rounded-lg shadow-md'>
+      <div className='h-[20%] p-5 bg-base-200 rounded-lg shadow-md'>
         <RequestForm
           messages={messages}
           setMessages={setMessages}
