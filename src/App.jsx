@@ -7,7 +7,7 @@ const systemPrompt = 'You are a sassy web developer';
 
 const App = () => {
   const chatRef = useRef(null);
-  const [totalRequests, setTotalRequests] = useState(0);
+  const [totalRequests, setTotalRequests] = useState(import.meta.env.VITE_MAX_REQUESTS || 5);
   const [messages, setMessages] = useState([
     {
       id: 1,
