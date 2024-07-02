@@ -26,6 +26,7 @@ npm install
 
   - A variable `VITE_OPENAI_PROXY` with the value of the host where your local proxy is running, it defaults to `http:localhost:5050`
   - A variable `VITE_OPENAI_PROXY_MODE` with the value of the mode you want to use the proxy in, set it to `development` initially
+  - An third optional variable `VITE_MAX_REQUESTS` with the allowed number of requests in the chat, if not present, it defaults to 5
 
 - Run
 
@@ -33,4 +34,4 @@ npm install
 npm run dev
 ```
 
-:warning: Since this project sends the requests to a local proxy, you need to have it running!
+:warning: Since this project sends the requests to a local [OpenAI proxy](https://github.com/WebDev-WBSCodingSchool/openai-proxy), you need to have it running! Make sure you are running the latest version by pulling from GH :heart:
