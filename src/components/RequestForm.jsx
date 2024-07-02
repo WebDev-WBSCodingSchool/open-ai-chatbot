@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const RequestForm = ({ setMessages }) => {
+const RequestForm = ({ messages, setMessages }) => {
   const [loading, setLoading] = useState(false);
   const [{ message, stream }, setFormState] = useState({
     message: '',
@@ -30,6 +30,51 @@ const RequestForm = ({ setMessages }) => {
         }
       ]);
       setFormState(prev => ({ ...prev, message: '' }));
+      const res = await fetch(`${import.meta.env.VITE_OPENAI_PROXY}/api/v1/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json ',
+          provider: 'open-ai',
+          mode: import.meta.env.VITE_OPENAI_PROXY_MODE
+        },
+        body: JSON.stringify({ model: 'gpt-4o', messages, stream })
+      });
+      if (stream) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let result = false;
+        const newMessageId = crypto.randomUUID();
+        while (!(result = await reader.read()).done) {
+          const chunk = decoder.decode(result.value, { stream: true });
+          const lines = chunk.split('\n');
+          lines.forEach(line => {
+            if (line.startsWith('data:')) {
+              const jsonStr = line.replace('data:', '');
+              const data = JSON.parse(jsonStr);
+              const content = data.choices[0]?.delta?.content;
+              if (content) {
+                setMessages(prev => {
+                  const isMessageAlreadyAdded = prev.find(m => m.id === newMessageId);
+                  if (isMessageAlreadyAdded)
+                    return prev.map(m =>
+                      m.id === newMessageId ? { ...m, content: `${m.content}${content}` } : m
+                    );
+                  return [...prev, { id: newMessageId, role: 'assistant', content }];
+                });
+              }
+            }
+          });
+        }
+      } else {
+        const { message } = await res.json();
+        setMessages(prev => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            ...message
+          }
+        ]);
+      }
     } catch (error) {
       console.error(error);
     } finally {

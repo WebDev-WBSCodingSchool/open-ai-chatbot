@@ -26,7 +26,7 @@ const App = () => {
         <Chat messages={messages} />
       </div>
       <div className='h-[25%] p-5 bg-base-200 rounded-lg shadow-md'>
-        <RequestForm setMessages={setMessages} />
+        <RequestForm messages={messages} setMessages={setMessages} />
       </div>
     </div>
   );
