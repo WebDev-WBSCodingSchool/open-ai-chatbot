@@ -22,7 +22,10 @@ cd open-ai-chatbot
 npm install
 ```
 
-- Create `.env.development` file at the root of the project with a variable `VITE_OPENAI_PROXY` with the value of the host where your local proxy is running, it defaults to `http:localhost:5050`
+- Create `.env.development` file at the root of the project with:
+
+  - A variable `VITE_OPENAI_PROXY` with the value of the host where your local proxy is running, it defaults to `http:localhost:5050`
+  - A variable `VITE_OPENAI_PROXY_MODE` with the value of the mode you want to use the proxy in, set it to `development` initially
 
 - Run
 
