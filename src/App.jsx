@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { Chat, RequestForm } from '@/components';
 import 'react-toastify/dist/ReactToastify.css';
 
-const systemPrompt = 'You are a web developer assistant that only replies in haikus.';
+const systemPrompt = 'You are a sassy web developer';
 
 const App = () => {
   const chatRef = useRef(null);

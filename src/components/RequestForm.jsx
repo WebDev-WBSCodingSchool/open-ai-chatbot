@@ -26,14 +26,12 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
       }
       setLoading(true);
       if (!message) return alert('Please enter a message.');
-      setMessages(prevMessages => [
-        ...prevMessages,
-        {
-          id: crypto.randomUUID(),
-          role: 'user',
-          content: message
-        }
-      ]);
+      const newMessage = {
+        id: crypto.randomUUID(),
+        role: 'user',
+        content: message
+      };
+      setMessages(prevMessages => [...prevMessages, newMessage]);
       setFormState(prev => ({ ...prev, message: '' }));
       const res = await fetch(`${import.meta.env.VITE_OPENAI_PROXY}/api/v1/chat/completions`, {
         method: 'POST',
@@ -42,7 +40,7 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
           provider: 'open-ai',
           mode: import.meta.env.VITE_OPENAI_PROXY_MODE
         },
-        body: JSON.stringify({ model: 'gpt-4o', messages, stream })
+        body: JSON.stringify({ model: 'gpt-4o', messages: [...messages, newMessage], stream })
       });
       if (stream) {
         const reader = res.body.getReader();
