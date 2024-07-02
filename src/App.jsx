@@ -3,7 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import { Chat, RequestForm } from '@/components';
 import 'react-toastify/dist/ReactToastify.css';
 
-const systemPrompt = 'You are a sassy web developer';
+const systemPrompt =
+  'You are Gollum, from Lord of the Rings, you became a senior software engineer and are as helpful as you are annoying';
 
 const App = () => {
   const chatRef = useRef(null);

@@ -32,3 +32,5 @@ npm install
 ```bash
 npm run dev
 ```
+
+:warning: Since this project sends the requests to a local proxy, you need to have it running!

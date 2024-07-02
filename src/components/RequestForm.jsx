@@ -5,7 +5,7 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
   const [loading, setLoading] = useState(false);
   const [{ message, stream }, setFormState] = useState({
     message: '',
-    stream: false
+    stream: true
   });
 
   const handleChange = e => {
@@ -89,7 +89,7 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
   return (
     <form onSubmit={handleSubmit}>
       <label className='label cursor-pointer flex justify-end gap-2'>
-        <span className='label-text'>Stream response</span>
+        <span className='label-text'>Stream response?</span>
         <input
           type='checkbox'
           name='stream'
@@ -98,30 +98,26 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
           className='checkbox'
         />
       </label>
-      <textarea
-        name='message'
-        value={message}
-        rows='2'
-        onChange={handleChange}
-        placeholder='Ask me anything...'
-        className='w-full textarea textarea-bordered'
-        disabled={loading}
-      ></textarea>
-      <button type='submit' className='btn btn-primary mt-2 w-full' disabled={loading}>
-        {loading ? (
-          <>
+      <div className='flex items-center gap-2'>
+        <textarea
+          name='message'
+          value={message}
+          rows='2'
+          onChange={handleChange}
+          placeholder='Ask me anything...'
+          className='w-full textarea textarea-bordered'
+          disabled={loading}
+        ></textarea>
+        <button type='submit' className='btn btn-primary btn-circle' disabled={loading}>
+          {loading ? (
             <span className='loading loading-spinner'></span>
-            Processing
-          </>
-        ) : (
-          <>
-            Send{' '}
+          ) : (
             <span role='img' aria-label='sparkles'>
               ✨
             </span>
-          </>
-        )}
-      </button>
+          )}
+        </button>
+      </div>
     </form>
   );
 };
