@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-const RequestForm = ({ messages, setMessages }) => {
+const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests }) => {
   const [loading, setLoading] = useState(false);
   const [{ message, stream }, setFormState] = useState({
     message: '',
@@ -19,6 +20,10 @@ const RequestForm = ({ messages, setMessages }) => {
   const handleSubmit = async e => {
     try {
       e.preventDefault();
+      if (totalRequests === 5) {
+        setFormState(prev => ({ ...prev, message: '' }));
+        throw new Error('You have reached the maximum number of requests.');
+      }
       setLoading(true);
       if (!message) return alert('Please enter a message.');
       setMessages(prevMessages => [
@@ -75,8 +80,9 @@ const RequestForm = ({ messages, setMessages }) => {
           }
         ]);
       }
+      setTotalRequests(prev => prev + 1);
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -101,6 +107,7 @@ const RequestForm = ({ messages, setMessages }) => {
         onChange={handleChange}
         placeholder='Ask me anything...'
         className='w-full textarea textarea-bordered'
+        disabled={loading}
       ></textarea>
       <button type='submit' className='btn btn-primary mt-2 w-full' disabled={loading}>
         {loading ? (
