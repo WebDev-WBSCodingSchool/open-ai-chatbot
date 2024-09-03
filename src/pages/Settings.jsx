@@ -33,7 +33,7 @@ const Settings = () => {
       if (!res.ok) throw Error('Posting failed');
       const data = await res.json();
       console.log(data);
-      // setImage(data[0].b64_json);
+      // setImage(data[0].b64_json); // für b64_json
       setImage(data[0].url);
     } catch (error) {
       console.error(error);
@@ -46,9 +46,8 @@ const Settings = () => {
   return (
     <div className='h-screen'>
       <div className='h-[75%] p-5 bg-base-200 rounded-lg shadow-md overflow-y-scroll'>
-        <a href={image} download>
-          <img className='h-full' src={`${image}`} alt='Image' />
-        </a>
+        <img className='h-full' src={`data:image/png;base64,${image}`} alt='Image' />
+        <img className='h-full' src={image} alt='Image' />
       </div>
       <div className='h-[20%] p-5 bg-base-200 rounded-lg shadow-md'>
         <form onSubmit={handleSubmit}>
