@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
+// Standardeinstellungen für Bildgenerierung, den Prompt setzen wir später ein.
 const promptObj = {
   model: 'dall-e-3',
   n: 1,
@@ -20,6 +21,9 @@ const Settings = () => {
     try {
       const body = { ...promptObj, prompt };
 
+      // üblicher Aufbau, wenn wir posten: fetch(url, optionen)
+      // In den Optionen schicken wir den Inhalt (body), die Methode (post, put, delete statt get) und headers mit
+      // Wenn JSON als Inhalt mitgeschickt wird, brauchen wir den header 'Content-Type': 'application/json'
       const res = await fetch('http://localhost:5050/api/v1/images/generations', {
         method: 'POST',
         headers: {
@@ -27,6 +31,7 @@ const Settings = () => {
           provider: 'open-ai',
           mode: 'production',
         },
+        // Wir können nur Text in JSON-Format verschicken, keine Objekte direkt
         body: JSON.stringify(body),
       });
 
