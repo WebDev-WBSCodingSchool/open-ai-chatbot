@@ -33,7 +33,7 @@ const RequestForm = ({ messages, setMessages, totalRequests, setTotalRequests })
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setFormState((prev) => ({ ...prev, message: '' }));
-      const res = await fetch(`${import.meta.env.VITE_OPENAI_PROXY}/api/v1/chat/completions`, {
+      const res = await fetch(`http://localhost:5050/api/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json ',

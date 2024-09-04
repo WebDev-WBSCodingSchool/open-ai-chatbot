@@ -6,7 +6,7 @@ const promptObj = {
   model: 'dall-e-3',
   n: 1,
   size: '1024x1024',
-  // response_format: 'b64_json',
+  response_format: 'b64_json',
 };
 
 const Settings = () => {
@@ -37,9 +37,9 @@ const Settings = () => {
 
       if (!res.ok) throw Error('Posting failed');
       const data = await res.json();
-      console.log(data);
-      // setImage(data[0].b64_json); // für b64_json
-      setImage(data[0].url);
+      // console.log(data);
+      setImage(data[0].b64_json); // für b64_json
+      // setImage(data[0].url);
     } catch (error) {
       console.error(error);
       toast.error(error.message);
@@ -51,8 +51,14 @@ const Settings = () => {
   return (
     <div className='h-screen'>
       <div className='h-[75%] p-5 bg-base-200 rounded-lg shadow-md overflow-y-scroll'>
-        <img className='h-full' src={`data:image/png;base64,${image}`} alt='Image' />
-        <img className='h-full' src={image} alt='Image' />
+        {image && (
+          // base64 Dateien sind sehr einfach für den User downloadbar zu machen. Einfach dasselbe, was in die img src kommt hier in das href-Attribut und ein download-Attribut mit dem gewünschten Dateinamen (besser wäre es noch dynamisch).
+          // Mit urls ist das wesentlich komplizierter.
+          <a href={`data:image/png;base64,${image}`} download={'generatedImg.png'}>
+            <img className='h-full' src={`data:image/png;base64,${image}`} alt='Image' />
+          </a>
+        )}
+        {/* {image && <img className='h-full' src={image} alt='Image' />} */}
       </div>
       <div className='h-[20%] p-5 bg-base-200 rounded-lg shadow-md'>
         <form onSubmit={handleSubmit}>
